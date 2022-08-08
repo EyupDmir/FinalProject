@@ -32,11 +32,21 @@ namespace ConsoleUI
         {
             ProductManager productManager = new ProductManager(new EfProductDal());
 
-            foreach (var product in productManager.GetProductDetails())
-            //Artık GetAll demek yerine istediğimiz özelliği yazabiliriz. GetAllByCategoryIs(2) gibi
+            var result = productManager.GetProductDetails();
+            if (result.Success==true)
             {
-                Console.WriteLine(product.ProductName + "/" + product.CategoryName);
+                foreach (var product in result.Data)
+                //Artık GetAll demek yerine istediğimiz özelliği yazabiliriz. GetAllByCategoryIs(2) gibi
+                {
+                    Console.WriteLine(product.ProductName + "/" + product.CategoryName);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+
+            
         }
     }
 }
