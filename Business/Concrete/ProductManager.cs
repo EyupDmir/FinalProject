@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.CCS;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
@@ -28,7 +29,8 @@ namespace Business.Concrete
             _categoryService = categoryService;
         }
 
-        [ValidationAspect(typeof(ProductValidator))]
+        [SecuredOperation("product.add, admin")]
+        [ValidationAspect(typeof(ProductValidator))] //Yetkilendirme
         public IResult Add(Product product) //Void = Tip Döndürmüyor
         {
             //Business Codes = iş kodu
@@ -87,11 +89,11 @@ namespace Business.Concrete
             throw new NotImplementedException();
         }
 
-        //Bir kategoride en fazla 10 ürün olabilir.
+        //Bir kategoride en fazla 20 ürün olabilir.
         private IResult CheckIfProductCountOfCategoryCorrect(int categoryId)
         {
             var result = _productDal.GetAll(p => p.CategoryId == categoryId).Count; //O categorideki ürünleri sayıları(count) ile beraber bul. //_productDal.GetAll(p => p.CategoryId == categoryId).Count;
-            if (result >= 10)
+            if (result >= 20)
             {
                 return new ErrorResult(Messages.ProductCountOfCategoryError);
             }
