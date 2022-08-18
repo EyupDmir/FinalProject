@@ -57,7 +57,6 @@ namespace Business.Concrete
             if (DateTime.Now.Hour == 22)
             {
                 return new ErrorDataResult<List<Product>>(Messages.MaintenanceTime);
-
             }
 
             //İş Kodları
