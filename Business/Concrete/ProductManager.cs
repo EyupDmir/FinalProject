@@ -30,7 +30,7 @@ namespace Business.Concrete
             _categoryService = categoryService;
         }
 
-        //[SecuredOperation("product.add, admin")]
+        [SecuredOperation("product.add, admin")]
         [ValidationAspect(typeof(ProductValidator))] //Yetkilendirme
         [CacheRemoveAspect("IProductService.Get")]
         public IResult Add(Product product) //Void = Tip Döndürmüyor
